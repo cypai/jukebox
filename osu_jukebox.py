@@ -62,12 +62,14 @@ while True:
         if len(dirs) == 0:
             print("No songs matching search query found")
         else:
-            if len(dirs) == 1:
-                play_dir(dirs[0])
-            else:
-                print("Multiple songs found. List:")
-                subprocess.run("ls " + osu_dir + " | rg " + " ".join(tokens[1:]), shell=True)
-                print("Playing randomly chosen:")
-                play_dir(random.choice(dirs))
+            subprocess.run("ls " + osu_dir + " | rg " + " ".join(tokens[1:]), shell=True)
+            try:
+                while len(dirs) > 0:
+                    choice = random.choice(dirs)
+                    dirs.remove(choice)
+                    play_dir(choice)
+                    song_history = choice
+            except:
+                pass
     elif f == "a":
         play_dir(song_history)
