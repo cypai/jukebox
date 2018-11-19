@@ -46,5 +46,16 @@ while True:
                 song_history = random_dir
         except:
             pass
+    elif f == "lprg":
+        for d in list(filter(lambda d: tokens[1] in d, os.listdir(osu_dir))):
+            print(d)
+        try:
+            while True:
+                song_dirs = list(filter(lambda d: tokens[1] in d, os.listdir(osu_dir)))
+                random_dir = random.choice(song_dirs)
+                play_dir(random_dir)
+                song_history = random_dir
+        except:
+            pass
     elif f == "a":
         play_dir(song_history)
