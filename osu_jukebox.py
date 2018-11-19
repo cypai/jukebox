@@ -57,5 +57,17 @@ while True:
                 song_history = random_dir
         except:
             pass
+    elif f == "prg":
+        dirs = list(filter(lambda d: tokens[1] in d, os.listdir(osu_dir)))
+        if len(dirs) == 0:
+            print("No songs matching search query found")
+        else:
+            if len(dirs) == 1:
+                play_dir(dirs[0])
+            else:
+                print("Multiple songs found. List:")
+                subprocess.run("ls " + osu_dir + " | rg " + " ".join(tokens[1:]), shell=True)
+                print("Playing randomly chosen:")
+                play_dir(random.choice(dirs))
     elif f == "a":
         play_dir(song_history)
