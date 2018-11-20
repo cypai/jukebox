@@ -12,7 +12,7 @@ def play(audio_filename):
     return subprocess.run(["mpv", audio_filename], encoding="UTF-8")
 
 def play_dir(song_dir):
-    audio_filenames = list(filter(lambda d: "mp3" in d, os.listdir(osu_dir + "/" + song_dir)))
+    audio_filenames = list(filter(lambda d: "mp3" in d or "ogg" in d, os.listdir(osu_dir + "/" + song_dir)))
     if len(audio_filenames) > 0:
         file_pairs = sorted(list(map(lambda f: (os.stat(osu_dir + "/" + song_dir + "/" + f).st_size, f), audio_filenames)), reverse=True)
         sp = play(osu_dir + "/" + song_dir + "/" + file_pairs[0][1])
