@@ -27,7 +27,7 @@ while True:
     if f == "q":
         exit(0)
     elif f == "rg":
-        subprocess.run("ls " + osu_dir + " | " + cmd, shell=True)
+        subprocess.run("ls " + osu_dir + " | rg -i " + " ".join(tokens[1:]), shell=True)
     elif f == "p":
         song_dirs = list(filter(lambda d: d.split(" ")[0] == tokens[1], os.listdir(osu_dir)))
         if len(song_dirs) > 0:
@@ -48,22 +48,21 @@ while True:
         except:
             pass
     elif f == "lprg":
-        for d in list(filter(lambda d: tokens[1] in d, os.listdir(osu_dir))):
-            print(d)
+        subprocess.run("ls " + osu_dir + " | rg -i " + " ".join(tokens[1:]), shell=True)
         try:
             while True:
-                song_dirs = list(filter(lambda d: tokens[1] in d, os.listdir(osu_dir)))
+                song_dirs = list(filter(lambda d: " ".join(tokens[1:]).lower() in d.lower(), os.listdir(osu_dir)))
                 random_dir = random.choice(song_dirs)
                 play_dir(random_dir)
                 song_history = random_dir
         except:
             pass
     elif f == "prg":
-        dirs = list(filter(lambda d: tokens[1] in d, os.listdir(osu_dir)))
+        dirs = list(filter(lambda d: " ".join(tokens[1:]).lower() in d.lower(), os.listdir(osu_dir)))
         if len(dirs) == 0:
             print("No songs matching search query found")
         else:
-            subprocess.run("ls " + osu_dir + " | rg " + " ".join(tokens[1:]), shell=True)
+            subprocess.run("ls " + osu_dir + " | rg -i " + " ".join(tokens[1:]), shell=True)
             try:
                 while len(dirs) > 0:
                     choice = random.choice(dirs)
